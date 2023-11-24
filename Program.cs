@@ -1,3 +1,5 @@
+using OpenTelemetry.Metrics;
+
 namespace GrafanaMetricsDemo
 {
     public class Program
@@ -10,6 +12,13 @@ namespace GrafanaMetricsDemo
 
             builder.Services.AddControllers();
 
+
+
+            builder.Services.AddOpenTelemetry()
+                .WithMetrics(builder => builder
+                .AddAspNetCoreInstrumentation()
+                .AddConsoleExporter());
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -20,6 +29,8 @@ namespace GrafanaMetricsDemo
             app.MapControllers();
 
             app.Run();
+
+
         }
     }
 }
