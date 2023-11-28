@@ -14,10 +14,21 @@
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "weatherforecast",
-      "applicationUrl": "http://localhost:5198",
+      "applicationUrl": "http://localhost:9590",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/weatherforecast",
+      "environmentVariables": {
+        "ASPNETCORE_HTTP_PORTS": "9590"
+      },
+      "publishAllPorts": true,
+      "httpPort": 9590,
+      "DockerfileRunArguments": "-h grafanademoapp --network my-bridge"
     },
     "IIS Express": {
       "commandName": "IISExpress",

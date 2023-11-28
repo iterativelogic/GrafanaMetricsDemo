@@ -1,4 +1,9 @@
 using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
+using Prometheus;
+using System;
+using System.Diagnostics;
+using System.Diagnostics.Metrics;
 
 namespace GrafanaMetricsDemo
 {
@@ -8,29 +13,35 @@ namespace GrafanaMetricsDemo
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
             builder.Services.AddControllers();
 
-
-
-            builder.Services.AddOpenTelemetry()
-                .WithMetrics(builder => builder
-                .AddAspNetCoreInstrumentation()
-                .AddConsoleExporter());
+            //builder.Services
+            //    .AddOpenTelemetry()
+            //    .WithTracing(builder => {
+            //        builder.AddAspNetCoreInstrumentation();
+            //        builder.AddConsoleExporter();
+            //    })
+            //    .WithMetrics(builder => {
+            //        builder.AddAspNetCoreInstrumentation();
+            //        builder.AddPrometheusExporter();
+            //        builder.AddConsoleExporter();
+            //    });
 
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-
+            app.UseRequestDurationMeasurement();
             app.UseAuthorization();
-
-
             app.MapControllers();
+            app.MapMetrics();
 
             app.Run();
+        }
 
-
+        static void OnMeasurementRecorded<T>(Instrument instrument, T measurement, ReadOnlySpan<KeyValuePair<string, object?>> tags, object? state)
+        {
+            Console.WriteLine($"--> {instrument.Name} recorded measurement {measurement}");
         }
     }
+
 }

@@ -1,2 +1,22 @@
 Add open telemetry metrics
 Publish to prometheus
+
+docker pull grafana/grafana
+docker pull prom/prometheus
+
+docker run -d -p 3000:3000 --name=grafana  --hostname=grafana --network=my-bridge grafana/grafana
+docker run -d -p 9090:9090 --name=prometheus  --hostname=prometheus --network=my-bridge prom/prometheus
+
+grafana creds
+admin
+Logic@123
+
+
+Links
+Grafana -> http://localhost:3000/
+Prometheus -> http://localhost:9090/
+https://github.com/prometheus-net/prometheus-net
+
+
+
+dotnet-counters monitor --name GrafanaMetricsDemo --counters System.Runtime,Microsoft.AspNetCore.Hosting
