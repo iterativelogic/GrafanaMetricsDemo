@@ -18,5 +18,7 @@ Prometheus -> http://localhost:9090/
 https://github.com/prometheus-net/prometheus-net
 
 
-
+Commands:
+prometheus --config.file=prometheus.yml
 dotnet-counters monitor --name GrafanaMetricsDemo --counters System.Runtime,Microsoft.AspNetCore.Hosting
+docker run -d -p 9411:9411 openzipkin/zipkin

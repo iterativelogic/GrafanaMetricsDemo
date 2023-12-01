@@ -23,7 +23,7 @@ namespace GrafanaMetricsDemo.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            Thread.Sleep(2000);
+            Thread.Sleep(5500);
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
@@ -37,7 +37,7 @@ namespace GrafanaMetricsDemo.Controllers
         [HttpGet("summary")]
         public IEnumerable<WeatherForecast> GetSummary()
         {
-            Thread.Sleep(6000);
+            Thread.Sleep(3000);
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
@@ -51,7 +51,7 @@ namespace GrafanaMetricsDemo.Controllers
         [HttpGet("duplicate")]
         public IEnumerable<WeatherForecast> GetSummaryDuplicate()
         {
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),

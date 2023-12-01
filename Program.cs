@@ -12,8 +12,9 @@ namespace GrafanaMetricsDemo
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var services = builder.Services;
 
-            builder.Services.AddControllers();
+            services.AddControllers();
 
             //builder.Services
             //    .AddOpenTelemetry()
@@ -33,6 +34,8 @@ namespace GrafanaMetricsDemo
             app.UseRequestDurationMeasurement();
             app.UseAuthorization();
             app.MapControllers();
+
+            app.UseHttpMetrics();
             app.MapMetrics();
 
             app.Run();
