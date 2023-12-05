@@ -1,4 +1,5 @@
-﻿using Prometheus;
+﻿using Microsoft.AspNetCore.Http.Features;
+using Prometheus;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -7,11 +8,11 @@ namespace GrafanaMetricsDemo
     public class RequestDurationMeasurementMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<RequestDurationMeasurementMiddleware> logger; 
+        private readonly ILogger<RequestDurationMeasurementMiddleware> logger;
         private static readonly Gauge requestDuration = Metrics.CreateGauge("http_request_duration_ms", "Request processing duration in milliseconds.", new GaugeConfiguration
         {
             LabelNames = new string[] { "method", "path" }
-            
+
         });
 
         public RequestDurationMeasurementMiddleware(RequestDelegate next, ILogger<RequestDurationMeasurementMiddleware> logger)
@@ -19,7 +20,7 @@ namespace GrafanaMetricsDemo
             _next = next;
             this.logger = logger;
 
-            
+
         }
 
         public async Task InvokeAsync(HttpContext context)

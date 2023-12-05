@@ -17,8 +17,14 @@ Grafana -> http://localhost:3000/
 Prometheus -> http://localhost:9090/
 https://github.com/prometheus-net/prometheus-net
 
+https://learn.microsoft.com/en-us/dotnet/core/diagnostics/distributed-tracing-concepts
+https://github.com/dotnet/runtime/blob/main/src/libraries/System.Diagnostics.DiagnosticSource/src/DiagnosticSourceUsersGuide.md
+https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.diagnosticlistener?view=net-8.0
+https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/metrics/exemplars
+https://learn.microsoft.com/en-us/dotnet/core/diagnostics/distributed-tracing-collection-walkthroughs#collect-traces-using-custom-logic
+
 
 Commands:
 prometheus --config.file=prometheus.yml
 dotnet-counters monitor --name GrafanaMetricsDemo --counters System.Runtime,Microsoft.AspNetCore.Hosting
-docker run -d -p 9411:9411 openzipkin/zipkin
+docker run -d -p 9411:9411 --name=zipkin openzipkin/zipkin

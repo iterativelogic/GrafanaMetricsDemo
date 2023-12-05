@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Http.Features;
 using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Prometheus;
 using System;
@@ -15,6 +17,21 @@ namespace GrafanaMetricsDemo
             var services = builder.Services;
 
             services.AddControllers();
+
+            services.AddOpenTelemetry()
+                .ConfigureResource(resource => resource.AddService("GrafanaDemoApp"))
+                .WithTracing(builder =>
+                    builder
+                    .AddAspNetCoreInstrumentation()
+                    .AddConsoleExporter()
+                    .AddZipkinExporter(o => o.HttpClientFactory = () =>
+                    {
+                        HttpClient client = new HttpClient();
+                        client.DefaultRequestHeaders.Add("X-MyCustomHeader", "value");
+                        return client;
+                    }));
+
+
 
             //builder.Services
             //    .AddOpenTelemetry()
