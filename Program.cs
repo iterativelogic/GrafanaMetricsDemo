@@ -11,8 +11,12 @@ namespace GrafanaMetricsDemo
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static readonly ActivitySource MyActivitySource = new ActivitySource("GrafanaDemoApp.Traces");
+        
+
+        public static async Task Main(string[] args)
         {
+
             var builder = WebApplication.CreateBuilder(args);
             var services = builder.Services;
 
@@ -22,7 +26,11 @@ namespace GrafanaMetricsDemo
                 .ConfigureResource(resource => resource.AddService("GrafanaDemoApp"))
                 .WithTracing(builder =>
                     builder
-                    .AddAspNetCoreInstrumentation()
+                    .AddSource("GrafanaDemoApp.Traces")
+                    .AddAspNetCoreInstrumentation(options => 
+                    {
+                        options.Filter = context => context.Request.Path != "/metrics";
+                    })                    
                     .AddConsoleExporter()
                     .AddZipkinExporter(o => o.HttpClientFactory = () =>
                     {
@@ -55,7 +63,12 @@ namespace GrafanaMetricsDemo
             app.UseHttpMetrics();
             app.MapMetrics();
 
-            app.Run();
+            Task runTask = app.RunAsync();
+
+
+            using var activityRoot = MyActivitySource.StartActivity("App");
+
+            await runTask;
         }
 
         static void OnMeasurementRecorded<T>(Instrument instrument, T measurement, ReadOnlySpan<KeyValuePair<string, object?>> tags, object? state)

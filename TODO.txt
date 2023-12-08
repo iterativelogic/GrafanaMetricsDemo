@@ -3,9 +3,12 @@ Publish to prometheus
 
 docker pull grafana/grafana
 docker pull prom/prometheus
+docker pull grafana/tempo
 
 docker run -d -p 3000:3000 --name=grafana  --hostname=grafana --network=my-bridge grafana/grafana
 docker run -d -p 9090:9090 --name=prometheus  --hostname=prometheus --network=my-bridge prom/prometheus
+docker run -d -p 3200:3200 --name=tempo  --hostname=tempo --network=my-bridge grafana/tempo
+
 
 grafana creds
 admin
