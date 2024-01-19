@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dashboards", "Dashboards", 
 		..\..\Users\Pranav\Downloads\ASP.NET App Traces-1702043256984_ext.json = ..\..\Users\Pranav\Downloads\ASP.NET App Traces-1702043256984_ext.json
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GrafanaDocker", "GrafanaDocker", "{9C486B36-DCF0-4AEB-9336-797603AACF6F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

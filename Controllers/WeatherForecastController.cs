@@ -14,19 +14,18 @@ namespace GrafanaMetricsDemo.Controllers
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-        private readonly ActivitySource _activitySource;
+        
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ActivitySource activitySource, ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
-            this._activitySource = activitySource;
             _logger = logger;
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            using Activity activity = Program.MyActivitySource.StartActivity("GET Weather Forecast Action");
+            using Activity activity = Program.AppActivitySource.StartActivity("GET Weather Forecast Action");
 
             activity.AddTag("OperationName", "GET Weather Forecast");
             activity.AddEvent(new ActivityEvent("Staring operation GET Weather Forecast"));

@@ -11,8 +11,7 @@ namespace GrafanaMetricsDemo
 {
     public class Program
     {
-        public static readonly ActivitySource MyActivitySource = new ActivitySource("GrafanaDemoApp.Traces");
-        
+        public static readonly ActivitySource AppActivitySource = new ActivitySource("GrafanaDemoApp.Traces");       
 
         public static async Task Main(string[] args)
         {
@@ -20,6 +19,7 @@ namespace GrafanaMetricsDemo
             var builder = WebApplication.CreateBuilder(args);
             var services = builder.Services;
 
+            services.AddSingleton(AppActivitySource);
             services.AddControllers();
 
             services.AddOpenTelemetry()
@@ -64,9 +64,6 @@ namespace GrafanaMetricsDemo
             app.MapMetrics();
 
             Task runTask = app.RunAsync();
-
-
-            using var activityRoot = MyActivitySource.StartActivity("App");
 
             await runTask;
         }
